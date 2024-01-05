@@ -60,9 +60,9 @@ const Home = (): JSX.Element => {
           height={160}
           width={160}
         />
-        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md border-slate-300 border-solid border-2 bg-slate-200 h-10 w-5/12 items-center text-center align-middle">
-          <p className="mt-1">Loading...</p>
-        </div>
+      </div>
+      <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md border-slate-300 border-solid border-2 bg-slate-200 h-10 w-5/12 items-center text-center align-middle">
+        <p className="mt-1">Loading...</p>
       </div>
     </main>
   );
