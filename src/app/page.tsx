@@ -1,50 +1,59 @@
 "use client";
 import Image from "next/image";
 import { useRef } from "react";
-// import styles from '../styles/home.module.css'
 import styles from "../styles/home.module.css";
 
 const Home = (): JSX.Element => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const imgRef = useRef<HTMLImageElement | null>(null);
-  const container = containerRef.current;
-  const img = imgRef.current;
+  const container = useRef<HTMLDivElement | null>(null);
+  const img = useRef<HTMLImageElement | null>(null);
 
   const manageMouseMove = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     const { clientX, clientY } = event;
 
-    if (container && img) {
-      const containerPosition = container.getBoundingClientRect();
-      const x = clientX - containerPosition.x;
-      const y = clientY - containerPosition.y;
-      img.style.top = y + "px";
-      img.style.left = x + "px";
-      draw(x, y);
+    const containerPosition = container?.current?.getBoundingClientRect();
+    const x = clientX - (containerPosition?.x ?? 0);
+    const y = clientY - (containerPosition?.y ?? 0);
+
+    if (img.current) {
+      img.current.style.top = y + "px";
+      img.current.style.left = x + "px";
     }
+
+    draw(x, y);
   };
 
   const draw = (x: number, y: number) => {
     const div = document.createElement("div");
-    // const styleCircle =
-    //   "w-160 h-160 rounded-full border-solid border-4 border-black absolute -translate-x-1/2 -translate-y-1/2 z-1";
     div.classList.add(styles["circle"]);
     div.style.top = y + "px";
     div.style.left = x + "px";
-    container?.append(div);
+    container?.current?.append(div);
+
+    if ((container?.current?.childNodes.length ?? 0) > 25) {
+      erase();
+    } else {
+      setTimeout(() => {
+        erase();
+      }, 1500);
+    }
+  };
+
+  const erase = () => {
+    container?.current?.removeChild(container.current.childNodes[1]);
   };
   return (
     <main className="flex h-dvh justify-center items-center">
       <div
-        ref={containerRef}
+        ref={container}
         onMouseMove={(e) => {
           manageMouseMove(e);
         }}
         className="h-dvh w-dvw relative overflow-hidden border-solid border-4 border-black bg-yellow-300"
       >
         <Image
-          ref={imgRef}
+          ref={img}
           className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           src="/assets/smiley.svg"
           alt="smiley-face"
