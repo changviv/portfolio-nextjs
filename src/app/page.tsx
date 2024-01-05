@@ -45,7 +45,7 @@ const Home = (): JSX.Element => {
       >
         <Image
           ref={imgRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-"
+          className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           src="/assets/smiley.svg"
           alt="smiley-face"
           height={160}
